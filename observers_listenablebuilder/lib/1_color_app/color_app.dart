@@ -21,7 +21,16 @@ void main() {
   runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Home()));
 }
 
-enum CardType { red, green, yellow, blue }
+enum CardType {
+  red(Colors.red),
+  green(Colors.green),
+  yellow(Colors.yellow),
+  blue(Colors.blue),
+  purple(Colors.purple);
+
+  final Color color;
+  const CardType(this.color);
+}
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -77,18 +86,7 @@ class ColorTap extends StatelessWidget {
 
   const ColorTap({super.key, required this.type});
 
-  Color get buttonBackgroundColor {
-    switch (type) {
-      case CardType.blue:
-        return Colors.blue;
-      case CardType.green:
-        return Colors.green;
-      case CardType.red:
-        return Colors.red;
-      case CardType.yellow:
-        return Colors.yellow;
-    }
-  }
+  Color get buttonBackgroundColor => type.color;
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +134,8 @@ class StatisticsScreen extends StatelessWidget {
               children: colorService.allTapCount.entries
                   .map(
                     (entry) => Text(
-                        '${entry.key.name.toUpperCase()} Taps: ${entry.value}',
-                        style: const TextStyle(fontSize: 24),
+                      '${entry.key.name.toUpperCase()} Taps: ${entry.value}',
+                      style: const TextStyle(fontSize: 24),
                     ),
                   )
                   .toList(),
